@@ -1,14 +1,25 @@
 # StorySeeker 📚
 **Where Stories Find Their Readers** 📖
 
-This repository contains the backend for **StorySeeker**, an online bookstore built with Node.js, Express, and MongoDB.  
-The frontend is not yet implemented and will be added later.
+This repository contains the **full-stack implementation** of **StorySeeker**, an online bookstore.  
+The backend is built with **Node.js, Express, and MongoDB**, and the frontend uses **React with Vite**.
 
 ## Features
 - RESTful APIs for books, users, and orders ✅
 - JWT authentication 🔒
 - CRUD operations for books and users ✍️
 - Order management 🛒
+- Frontend home page with navigation bar and footer 🖥️
+
+## Project Structure
+
+<pre>
+StorySeeker/
+├── backend/ # Node.js + Express backend
+├── frontend/ # React frontend
+└── README.md
+</pre>
+
 
 ## Setup
 
@@ -34,6 +45,6 @@ npm run dev
 ```
 
 ## 📝 Notes 
-
->Backend only. Frontend will be added later.  
+ 
 >.env and node_modules are ignored via .gitignore  
+>Currently, the frontend and backend are set up separately, and the frontend uses the backend APIs to fetch and send data.
