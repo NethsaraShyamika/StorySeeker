@@ -4,42 +4,63 @@
 This repository contains the **full-stack implementation** of **StorySeeker**, an online bookstore.  
 The backend is built with **Node.js, Express, and MongoDB**, and the frontend uses **React with Vite**.
 
+[![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)](https://reactjs.org/)  
+[![Node.js](https://img.shields.io/badge/Backend-Node.js-green?logo=node.js)](https://nodejs.org/)  
+[![MongoDB](https://img.shields.io/badge/Database-MongoDB-yellow?logo=mongodb)](https://www.mongodb.com/)  
+[![Vite](https://img.shields.io/badge/Build-Vite-red?logo=vite)](https://vitejs.dev/)  
+[![NPM](https://img.shields.io/badge/NPM-v10.9.2-red?logo=npm)](https://www.npmjs.com/) 
+
 
 ## Features
 
 - ✅ RESTful APIs for books, users, and orders 
-- 🔒 JWT authentication 
+- 🔒 JWT authentication for secure login
 - ✍️ CRUD operations for books and users 
 - 🛒 Order management 
-- 🖥️ Frontend home page with navigation bar, hero section, and footer 
-- 📄 Additional pages: All Books, Login, Sign Up, Cart, Profile, About Us 
-- 🌐 Responsive design with Tailwind CSS
+- 🖥️ Responsive frontend: Home, All Books, Login, Sign Up, Cart, Profile, About Us
+- 📄 Additional UI components: Hero section, Navbar, Recently Added Books, Book Details, Loader
+- 🌐 Fully responsive design with Tailwind CSS
   
 
 ## 📁 Project Structure
 
 <pre>
 StorySeeker/
-├── backend/       # Node.js + Express backend
-├── frontend/      # React frontend with Vite
-│   ├── public/   # Images and static assets
+├── backend/                  # Node.js + Express backend
+│   ├── models/               # MongoDB models (Book, Order, User)
+│   ├── routes/               # API routes (user.js, auth.js)
+│   └── app.js                # Express server setup
+├── frontend/                 # React frontend with Vite
+│   ├── public/               # Images and static assets
 │   ├── src/
-│   │   ├── components/  # Reusable components (Navbar, Footer, Hero, etc.)
-│   │   └── pages/       # Page components (Home, AllBooks, Login, SignUp, Cart, Profile, AboutUs)
+│   │   ├── assets/           # Images (Hero.png, etc.)
+│   │   ├── components/       # Reusable components
+│   │   │   ├── BookCard/     
+│   │   │   ├── Home/         # Hero.jsx, RecentlyAdded.jsx
+│   │   │   ├── Loader/       
+│   │   │   ├── Profile/      # Sidebar, Settings, Favourites, UserOrderHistory
+│   │   │   ├── ScrollToTop.jsx
+│   │   │   └── ViewBookDetails/
+│   │   └── pages/            # Home, AllBooks, Login, SignUp, Cart, Profile, AboutUs
+│   └── store/                # Redux store (auth.js, index.js)
 └── README.md
+
 </pre>
 
 
 ## 💻 Frontend Details
 
-- **Hero Component**: Featured on the home page with promotional text and call-to-action button.
-- **Navbar**: Includes navigation links, Sign In / Sign Up buttons, and responsive hover effects.
-- **Pages**: Home, AllBooks, Login, SignUp, Cart, Profile, AboutUs.
-- **Styling**: Tailwind CSS for responsive and modern UI design.
+- **Hero Component**: Featured section on the home page with call-to-action button
+- **Recently Added Books**: Carousel/section showcasing new books
+- **Navbar**: Responsive navigation with hover effects, Sign In / Sign Up buttons
+- **Profile Page**: User profile with Sidebar, Favourites, Settings, and Order History
+- **ViewBookDetails**: Page to display book info and add to cart
+- **ScrollToTop**: Smooth scrolling when navigating between pages
   
 
 ## ⚙️ Setup
 
+◽Backend
 ```bash
 git clone <repo-url>
 cd backend
@@ -51,16 +72,17 @@ npm install --save-dev nodemon
 <pre>
   MONGODB_URI=your_mongodb_connection_string  
   JWT_SECRET=your_jwt_secret  
-  PORT=5000  
+  PORT=PORT_NUM  # Replace PORT_NUM with the port you want the server to run on
 </pre>
 
-◽Start the server in development mode:
+◽Start the backend server:
 ```bash
 npm run dev
 ```
 
-◽Start the frontend
+◽Frontend
 ```bash
+cd frontend
 npm install
 npm run dev
 ```
@@ -69,5 +91,6 @@ npm run dev
 ## 📝 Notes 
  
 >.env and node_modules are ignored via .gitignore  
->Frontend and backend are set up separately; the frontend interacts with backend APIs to fetch and send data.
->Hero section and navigation bar are designed to be responsive across devices.
+>Backend and frontend run separately; frontend interacts with backend APIs
+>Responsive design ensures a smooth experience across devices
+>New components added: BookCard, RecentlyAdded, Loader, Profile subcomponents, ViewBookDetails, ScrollToTop
