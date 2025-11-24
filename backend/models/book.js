@@ -34,4 +34,4 @@ const book = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Book", book);
+module.exports = mongoose.models.Book || mongoose.model("Book", book);
