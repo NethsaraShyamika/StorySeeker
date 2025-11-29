@@ -5,7 +5,8 @@ const authenticateToken = require("../middlewares/userAuth");
 //add book to favourite
 router.put("/add-favourite", authenticateToken, async (req, res) => {
   try {
-    const { bookid, id } = req.headers;
+    const { bookid } = req.headers;
+    const id = req.userId;
     const user = await User.findById(id);
 
     if (!user) {
@@ -42,7 +43,8 @@ router.put("/add-favourite", authenticateToken, async (req, res) => {
 
 router.put("/remove-favourite", authenticateToken, async (req, res) => {
   try {
-    const { bookid, id } = req.headers;
+    const { bookid } = req.headers;
+    const id = req.userId;
     const user = await User.findById(id);
 
     if (!user) {
@@ -78,10 +80,9 @@ router.put("/remove-favourite", authenticateToken, async (req, res) => {
   }
 });
 
-
 router.get("/get-favourites", authenticateToken, async (req, res) => {
   try {
-    const { id } = req.headers;
+    const id = req.userId;
 
     const user = await User.findById(id).populate("favourites");
 

@@ -25,15 +25,16 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="bg-zinc-900 px-2 md:px-12 flex flex-col md:flex-row h-screen py-8 text-white gap-6">
+    <div className="bg-zinc-900 px-2 md:px-12 flex flex-col md:flex-row py-8 text-white gap-6">
       {!Profile && (
-        <div className="flex justify-center items-center h-full w-full">
+        <div className="min-h-screen w-full flex justify-center items-center">
           <Loader />
         </div>
       )}
+
       {Profile && (
         <>
-          <div className="w-full md:w-1/6">
+          <div className="w-full md:w-1/6 h-screen">
             <Sidebar data={Profile} />
           </div>
           <div className="w-full md:w-5/6">

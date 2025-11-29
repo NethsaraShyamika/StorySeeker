@@ -29,10 +29,10 @@ const Login = () => {
           formData
         );
         dispatch(authActions.login());
-        dispatch(authActions.changeRole(response.data.role));
-        localStorage.setItem("id", response.data.id);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("role", response.data.role);
+        dispatch(authActions.changeRole(response.data.data.role));
+        localStorage.setItem("id", response.data.data.id);
+        localStorage.setItem("token", response.data.data.token);
+        localStorage.setItem("role", response.data.data.role);
         navigate("/profile");
       }
     } catch (err) {

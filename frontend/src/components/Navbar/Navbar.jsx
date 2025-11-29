@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaGripLines } from "react-icons/fa";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
@@ -12,49 +11,45 @@ const Navbar = () => {
     { title: "Cart", url: "/cart" },
     { title: "Profile", url: "/profile" },
   ];
+
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  if (isLoggedIn === false) {
-    links.splice(3, 2);
-  }
+  // Remove Cart + Profile when not logged in
+  const filteredLinks = isLoggedIn ? links : links.slice(0, 3);
 
   const [MobileNav, setMobileNav] = useState("hidden");
+
   return (
     <>
       <nav className="z-50 relative flex bg-zinc-800 text-white px-10 py-4 items-center justify-between">
+        
+        {/* Logo */}
         <Link to="/" className="flex items-center justify-between">
           <img
             className="w-10 h-10 inline mr-2 rounded"
             src="https://png.pngtree.com/template/20190727/ourlarge/pngtree-open-book-icon-simple-illustration-of-open-book-vector-icon-image_283605.jpg"
-            alt=""
+            alt="logo"
           />
           <h1 className="text-2xl font-semibold">StorySeeker</h1>
         </Link>
-        <div className="nav-links-storyseeker block md:flex items-center justify-between gap-6">
-          <div className="hidden md:flex gap-6 text-lg font-medium">
-            {links.map((items, index) => (
-              <>
-                {items.title === "Profile" ? (
-                  <Link
-                    to={items.url}
-                    className="hover:text-blue-500 transition-all duration-300"
-                    key={index}
-                  >
-                    {items.title}
-                  </Link>
-                ) : (
-                  <Link
-                    to={items.url}
-                    className="hover:text-blue-500 transition-all duration-300"
-                    key={index}
-                  >
-                    {items.title}{" "}
-                  </Link>
-                )}
-              </>
+
+        {/* Desktop Menu */}
+        <div className="nav-links-storyseeker hidden md:flex items-center gap-6">
+          
+          <div className="flex gap-6 text-lg font-medium">
+            {filteredLinks.map((item) => (
+              <Link
+                key={item.title}
+                to={item.url}
+                className="hover:text-blue-500 transition-all duration-300"
+              >
+                {item.title}
+              </Link>
             ))}
           </div>
-          {isLoggedIn === false && (
+
+          {/* Desktop Buttons */}
+          {!isLoggedIn && (
             <div className="hidden md:flex gap-6">
               <Link
                 to="/login"
@@ -70,56 +65,60 @@ const Navbar = () => {
               </Link>
             </div>
           )}
-          <button
-            className="block md:hidden text-white text-2xl hover:text-zinc-400"
-            onClick={() =>
-              setMobileNav(MobileNav === "hidden" ? "block" : "hidden")
-            }
-          >
-            <FaGripLines />
-          </button>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="block md:hidden text-white text-2xl hover:text-zinc-400"
+          onClick={() =>
+            setMobileNav(MobileNav === "hidden" ? "block" : "hidden")
+          }
+        >
+          <FaGripLines />
+        </button>
       </nav>
+
+      {/* Mobile Menu */}
       <div
         className={`${MobileNav} bg-zinc-800 h-screen absolute top-5 left-0 w-full z-40 flex flex-col items-center justify-center`}
       >
-        {links.map((items, index) => (
+        {filteredLinks.map((item) => (
           <Link
-            to={items.url}
+            key={item.title}
+            to={item.url}
             className="text-white text-2xl mb-8 font-semibold hover:text-blue-500 transition-all duration-300"
-            key={index}
-            onClick={() =>
-              setMobileNav(MobileNav === "hidden" ? "block" : "hidden")
-            }
+            onClick={() => setMobileNav("hidden")}
           >
-            {items.title}{" "}
+            {item.title}
           </Link>
         ))}
 
-        {isLoggedIn === false ? (
+        {/* Mobile Buttons */}
+        {!isLoggedIn ? (
           <>
             <Link
               to="/login"
-              className={`${MobileNav} border border-blue-500 hover:bg-blue-700 text-white hover:text-blue-500 font-bold py-2 px-8 mb-8 rounded transition-all duration-300`}
+              className="border border-blue-500 hover:bg-blue-700 text-white hover:text-blue-500 font-bold py-2 px-8 mb-8 rounded transition-all duration-300"
+              onClick={() => setMobileNav("hidden")}
             >
               Sign In
             </Link>
             <Link
               to="/signup"
-              className={`${MobileNav} bg-white hover:bg-zinc-700 text-zinc-800 hover:text-white font-bold py-2 px-8 mb-8 rounded transition-all duration-300`}
+              className="bg-white hover:bg-zinc-700 text-zinc-800 hover:text-white font-bold py-2 px-8 mb-8 rounded transition-all duration-300"
+              onClick={() => setMobileNav("hidden")}
             >
               Sign Up
             </Link>
           </>
         ) : (
-          <>
-            <Link
-              to="/logout"
-              className={`${MobileNav} border border-red-500 hover:bg-red-700 text-white hover:text-red-500 font-bold py-2 px-8 mb-8 rounded transition-all duration-300`}
-            >
-              Logout
-            </Link>
-          </>
+          <Link
+            to="/logout"
+            className="border border-red-500 hover:bg-red-700 text-white hover:text-red-500 font-bold py-2 px-8 mb-8 rounded transition-all duration-300"
+            onClick={() => setMobileNav("hidden")}
+          >
+            Logout
+          </Link>
         )}
       </div>
     </>

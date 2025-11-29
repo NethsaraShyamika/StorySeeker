@@ -5,7 +5,8 @@ const authenticateToken = require("../middlewares/userAuth");
 // Add book to cart
 router.put("/add-cart", authenticateToken, async (req, res) => {
   try {
-    const { bookid, id } = req.headers;
+    const { bookid } = req.headers;
+    const id = req.userId;
     const user = await User.findById(id);
 
     if (!user) {
@@ -44,7 +45,7 @@ router.put("/add-cart", authenticateToken, async (req, res) => {
 router.put("/remove-cart/:bookid", authenticateToken, async (req, res) => {
   try {
     const { bookid } = req.params;
-    const { id } = req.headers;
+    const id = req.userId;
 
     const user = await User.findById(id);
 
@@ -83,7 +84,7 @@ router.put("/remove-cart/:bookid", authenticateToken, async (req, res) => {
 // Get user cart
 router.get("/get-user-cart", authenticateToken, async (req, res) => {
   try {
-    const { id } = req.headers;
+    const id = req.userId;
     const user = await User.findById(id).populate("cart");
 
     if (!user) {

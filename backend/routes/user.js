@@ -122,7 +122,7 @@ router.post("/login", async (req, res) => {
 // Get user information
 router.get("/user-information", authenticateToken, async (req, res) => {
   try {
-    const { id } = req.headers;
+    const id = req.userId;
 
     const user = await User.findById(id).select("-password");
     if (!user) {
@@ -150,7 +150,7 @@ router.get("/user-information", authenticateToken, async (req, res) => {
 // Update user information
 router.put("/update-user", authenticateToken, async (req, res) => {
   try {
-    const { id } = req.headers;
+    const id = req.userId;
     const { username, email, address, avatar } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(

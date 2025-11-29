@@ -37,7 +37,6 @@ router.post("/signup", async (req, res) => {
         address: user.address,
       },
     });
-
   } catch (err) {
     return res.status(500).json({
       success: false,
@@ -69,9 +68,9 @@ router.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET || "SECRET_KEY",
-      { expiresIn: "1d" }
+      { userId: user._id.toString(), role: user.role },
+      process.env.JWT_SECRET || "bookStore123",
+      { expiresIn: "30d" }
     );
 
     return res.status(200).json({
@@ -85,7 +84,6 @@ router.post("/login", async (req, res) => {
         role: user.role,
       },
     });
-
   } catch (err) {
     return res.status(500).json({
       success: false,

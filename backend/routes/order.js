@@ -8,51 +8,45 @@ const Order = require("../models/order");
 // PLACE ORDER - one order per book
 router.post("/place-order", authenticateToken, async (req, res) => {
   try {
-    const { id } = req.headers;
+    const id = req.userId;
     const { order } = req.body;
 
+    console.log("Incoming order:", order);
+
     if (!order || !Array.isArray(order) || order.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "No books provided in the order",
-      });
+      return res.status(400).json({ success: false, message: "No books provided in the order" });
     }
 
     for (const orderData of order) {
+      console.log("Processing bookId:", orderData.bookId);
       if (!orderData.bookId) continue;
 
       const newOrder = new Order({
-        user: mongoose.Types.ObjectId(id),
-        book: [mongoose.Types.ObjectId(orderData.bookId)],
+        user: id,
+        book: [orderData.bookId],
       });
 
       const savedOrder = await newOrder.save();
 
       await User.findByIdAndUpdate(id, {
         $push: { orders: savedOrder._id },
-        $pull: { cart: mongoose.Types.ObjectId(orderData.bookId) },
+        $pull: { cart: orderData.bookId },
       });
     }
 
-    return res.status(201).json({
-      success: true,
-      message: "Order placed successfully",
-    });
+    return res.status(201).json({ success: true, message: "Order placed successfully" });
 
   } catch (error) {
     console.error("Error placing order:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-      error: error.message,
-    });
+    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
   }
 });
+
 
 // GET USER ORDER HISTORY
 router.get("/get-order-history", authenticateToken, async (req, res) => {
   try {
-    const { id } = req.headers;
+    const id = req.userId;
 
     const userData = await User.findById(id).populate({
       path: "orders",

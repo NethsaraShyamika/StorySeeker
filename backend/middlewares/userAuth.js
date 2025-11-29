@@ -7,10 +7,14 @@ const authenticateToken = (req, res, next) => {
   if (token == null) {
     return res.status(401).json({ error: "Authentication token required" });
   }
-  jwt.verify(token, "bookStore123", (err, user) => {
+  jwt.verify(token, process.env.JWT_SECRET || "bookStore123", (err, user) => {
     if (err) {
-      return res.status(403).json({ error: "Invalid or expired token. Please login again." });
+      return res
+        .status(403)
+        .json({ error: "Invalid or expired token. Please login again." });
     }
+    // Store userId in req object, don't modify headers
+    req.userId = user.userId;
     req.user = user;
     next();
   });
