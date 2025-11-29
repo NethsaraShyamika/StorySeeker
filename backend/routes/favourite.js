@@ -8,16 +8,35 @@ router.put("/add-favourite", authenticateToken, async (req, res) => {
     const { bookid, id } = req.headers;
     const user = await User.findById(id);
 
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
     const isFavourite = user.favourites.includes(bookid);
     if (isFavourite) {
-      return res.status(400).json({ error: "Book already in favourites" });
+      return res.status(400).json({
+        success: false,
+        message: "Book already in favourites",
+      });
     }
 
     await User.findByIdAndUpdate(id, { $push: { favourites: bookid } });
-    return res.status(200).json({ message: "Book added to favourites" });
+
+    return res.status(200).json({
+      success: true,
+      message: "Book added to favourites",
+    });
+
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
   }
 });
 
@@ -25,31 +44,68 @@ router.put("/remove-favourite", authenticateToken, async (req, res) => {
   try {
     const { bookid, id } = req.headers;
     const user = await User.findById(id);
-    const isFavourite = user.favourites.includes(bookid);
-    if (!isFavourite) {
-      return res.status(400).json({ error: "Book not found in favourites" });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
     }
+
+    const isFavourite = user.favourites.includes(bookid);
+
+    if (!isFavourite) {
+      return res.status(400).json({
+        success: false,
+        message: "Book not found in favourites",
+      });
+    }
+
     await User.findByIdAndUpdate(id, { $pull: { favourites: bookid } });
-    return res.status(200).json({ message: "Book removed from favourites" });
+
+    return res.status(200).json({
+      success: true,
+      message: "Book removed from favourites",
+    });
+
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
   }
 });
+
 
 router.get("/get-favourites", authenticateToken, async (req, res) => {
   try {
     const { id } = req.headers;
+
     const user = await User.findById(id).populate("favourites");
-    const favouriteBooks = user.favourites;
-    return res.json({
-        status: "success",
-        data: favouriteBooks,
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: user.favourites,
     });
+
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
   }
 });
+
 
 module.exports = router;
