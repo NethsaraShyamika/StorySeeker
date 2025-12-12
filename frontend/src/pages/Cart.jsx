@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { FaCartPlus } from "react-icons/fa6";
 import { AiFillDelete } from "react-icons/ai";
 import { ShoppingCart, Trash2, Package } from "lucide-react";
@@ -12,10 +12,10 @@ const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [Total, setTotal] = useState(0);
 
-  const headers = {
+  const headers = useMemo(() => ({
     id: localStorage.getItem("id"),
     authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
+  }), []);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -33,7 +33,7 @@ const Cart = () => {
       }
     };
     fetchCart();
-  }, []);
+  }, [headers]);
 
   const calculateTotal = (items) => {
     const sum = items.reduce((acc, item) => acc + (item.price || 0), 0);

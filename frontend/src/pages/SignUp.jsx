@@ -11,8 +11,6 @@ const SignUp = () => {
     address: "",
   });
 
-  const [error, setError] = useState("");
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -39,7 +37,6 @@ const SignUp = () => {
     <div className="min-h-screen flex items-center justify-center bg-zinc-900 px-4">
       <div className="bg-zinc-800 rounded-xl p-10 w-full max-w-md shadow-lg">
         <h2 className="text-3xl font-bold text-yellow-100 mb-6 text-center">Sign Up</h2>
-        {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="text"

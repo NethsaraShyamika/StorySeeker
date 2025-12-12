@@ -1,15 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/auth";
 
 const Sidebar = ({ data }) => {
+  const dispatch = useDispatch();
+  const history = useNavigate();
+
   return (
     <div className="bg-zinc-900 p-6 rounded-xl h-full flex flex-col items-center gap-6 shadow-lg border border-zinc-800">
 
-      {/* Profile Section */}
       <div className="flex flex-col items-center gap-2">
         <img
-          src={data.avatar}
+          src={data?.avatar || "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png"}
           alt="avatar"
           className="rounded-full w-40 h-40 object-cover border-2 border-zinc-700 shadow-md"
         />
@@ -24,7 +28,6 @@ const Sidebar = ({ data }) => {
         <div className="w-full h-px bg-zinc-700 mt-3 hidden lg:block"></div>
       </div>
 
-      {/* Sidebar Links */}
       <div className="w-full hidden lg:flex flex-col items-center gap-4">
         <Link
           to="/profile"
@@ -48,8 +51,15 @@ const Sidebar = ({ data }) => {
         </Link>
       </div>
 
-      {/* Logout */}
-      <button className="bg-red-600 w-full text-white font-semibold flex items-center justify-center py-2 rounded-lg hover:bg-red-500 transition duration-300 shadow">
+      <button className="bg-red-600 w-full text-white font-semibold flex items-center justify-center py-2 rounded-lg hover:bg-red-500 transition duration-300 shadow"
+      onClick={() => {
+        dispatch(authActions.logout());
+        dispatch(authActions.changeRole());
+        localStorage.clear("id");
+        localStorage.clear("token");
+        localStorage.clear("role");
+        history("/")
+      }}>
         Log Out 
         <FaArrowRightFromBracket className="inline ml-3 text-lg" />
       </button>

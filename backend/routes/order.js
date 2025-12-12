@@ -50,7 +50,7 @@ router.get("/get-order-history", authenticateToken, async (req, res) => {
 
     const userData = await User.findById(id).populate({
       path: "orders",
-      populate: { path: "book", select: "title author price category" },
+      populate: { path: "book", select: "title author price category description" },
       options: { sort: { createdAt: -1 } },
     });
 
@@ -61,9 +61,15 @@ router.get("/get-order-history", authenticateToken, async (req, res) => {
       });
     }
 
+    // Transform orders to match frontend expectation
+    const formattedOrders = userData.orders.map(order => ({
+      ...order._doc,
+      book: order.book[0] // Get first book from array
+    }));
+
     return res.status(200).json({
       success: true,
-      orders: userData.orders,
+      data: formattedOrders,
     });
 
   } catch (error) {

@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import ViewBookDetails from "./components/ViewBookDetails/ViewBookDetails";
 import ScrollToTop from "./components/ScrollToTop";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Home from "./pages/Home";
 import AllBooks from "./pages/AllBooks";
@@ -21,7 +21,6 @@ import Settings from "./components/Profile/Settings";
 
 const App = () => {
   const dispatch = useDispatch();
-  const role = useSelector((state) => state.auth.role);
   useEffect(() => {
     if(
       localStorage.getItem("id") &&
@@ -31,7 +30,7 @@ const App = () => {
       dispatch(authActions.login());
       dispatch(authActions.changeRole(localStorage.getItem("role")));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

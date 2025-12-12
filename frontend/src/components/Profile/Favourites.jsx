@@ -1,14 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import BookCard from "../BookCard/BookCard";
 import { FaHeartCirclePlus } from "react-icons/fa6";
 
 const Favourites = () => {
   const [FavouriteBooks, setFavouriteBooks] = useState([]);
-  const headers = {
+
+  const headers = useMemo(() => ({
     id: localStorage.getItem("id"),
     authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
+  }), []);
 
   useEffect(() => {
     const fetch = async () => {
@@ -23,17 +24,33 @@ const Favourites = () => {
       }
     };
     fetch();
-  }, []);
+  }, [headers]);
 
   const handleRemoveFromUI = (bookId) => {
-    setFavouriteBooks(prev => prev.filter(book => book._id !== bookId));
+    setFavouriteBooks((prev) => prev.filter((book) => book._id !== bookId));
   };
 
   return (
-    <div className="grid grid-cols-4 bg-zinc-100 p-6 rounded-xl min-h-screen gap-6 shadow-lg border border-zinc-800">
+    <div className="
+      grid 
+      grid-cols-1 
+      sm:grid-cols-2 
+      md:grid-cols-3 
+      lg:grid-cols-4 
+      bg-zinc-100 
+      p-4 
+      md:p-6 
+      rounded-xl 
+      min-h-screen 
+      gap-4 
+      md:gap-6 
+      shadow-lg 
+      border 
+      border-zinc-800
+    ">
       {FavouriteBooks.length === 0 ? (
-        <div className="col-span-4 flex flex-col items-center justify-center h-96 gap-4 text-gray-500">
-          <p className="text-2xl font-semibold text-center">
+        <div className="col-span-full flex flex-col items-center justify-center h-96 gap-4 text-gray-500">
+          <p className="text-xl md:text-2xl font-semibold text-center">
             You have no favourite books yet.
           </p>
           <FaHeartCirclePlus size={60} />
@@ -41,10 +58,10 @@ const Favourites = () => {
       ) : (
         FavouriteBooks.map((items, i) => (
           <div key={i}>
-            <BookCard 
-              data={items} 
-              favourite={true} 
-              onRemove={() => handleRemoveFromUI(items._id)} 
+            <BookCard
+              data={items}
+              favourite={true}
+              onRemove={() => handleRemoveFromUI(items._id)}
             />
           </div>
         ))
