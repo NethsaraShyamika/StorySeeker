@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import {Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import ViewBookDetails from "./components/ViewBookDetails/ViewBookDetails";
 import ScrollToTop from "./components/ScrollToTop";
-import { useDispatch } from "react-redux";
 
 import Home from "./pages/Home";
 import AllBooks from "./pages/AllBooks";
@@ -14,19 +14,24 @@ import SignUp from "./pages/SignUp";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import AboutUs from "./pages/AboutUs";
-import {authActions} from "./store/auth";
+import { authActions } from "./store/auth";
 import Favourites from "./components/Profile/Favourites";
 import UserOrderHistory from "./components/Profile/UserOrderHistory";
 import Settings from "./components/Profile/Settings";
+import AllOrders from "./pages/AllOrders";
+import AddBooks from "./pages/AddBooks";
+import UpdateBook from "./pages/UpdateBook";
 
 const App = () => {
   const dispatch = useDispatch();
+  const role = useSelector((state) => state.auth.role);
+
   useEffect(() => {
-    if(
+    if (
       localStorage.getItem("id") &&
       localStorage.getItem("token") &&
       localStorage.getItem("role")
-    ){
+    ) {
       dispatch(authActions.login());
       dispatch(authActions.changeRole(localStorage.getItem("role")));
     }
@@ -42,13 +47,21 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/profile" element={<Profile />} >
-          <Route index element={<Favourites />} />
+        <Route path="/profile" element={<Profile />}>
+          {role === "user" ? (
+            <Route index element={<Favourites />} />
+          ) : (
+            <Route index element={<AllOrders />} />
+          )}
+          {role === "admin" ? (
+            <Route path="add-book" element={<AddBooks />} />
+          ) : null}
           <Route path="order-history" element={<UserOrderHistory />} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="/about" element={<AboutUs />} />
         <Route path="/view-book-details/:id" element={<ViewBookDetails />} />
+        <Route path="/update-book/:id" element={<UpdateBook />} />
       </Routes>
       <Footer />
     </div>

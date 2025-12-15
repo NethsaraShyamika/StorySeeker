@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../Loader/Loader";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { GrLanguage } from "react-icons/gr";
@@ -13,6 +13,7 @@ import { MdOutlineDelete } from "react-icons/md";
 
 const ViewBookDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [Data, setData] = useState();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const role = useSelector((state) => state.auth.role);
@@ -81,6 +82,19 @@ const ViewBookDetails = () => {
     }
   };
 
+  const deleteBook = async () => {
+    try {
+      const response = await axios.delete(
+      "http://localhost:1000/api/v1/delete-book",
+      {headers}
+    );
+    alert(response.data.message);
+    navigate("/all-books");
+    } catch (error){
+      alert(error);
+    }
+  }
+
   return (
     <>
       {Data ? (
@@ -117,14 +131,14 @@ const ViewBookDetails = () => {
               {isLoggedIn && role === "admin" && (
                 <div className="flex flex-col md:flex-row lg:flex-col gap-4 lg:ml-4 mt-4 lg:mt-0">
                   <div className="flex flex-col items-center justify-center">
-                    <button className="flex items-center gap-2 bg-white text-black rounded-full text-3xl shadow-md hover:scale-105 transition px-12 py-3 md:p-3">
+                    <Link to={`/update-book/${id}`} className="flex items-center gap-2 bg-white text-black rounded-full text-3xl shadow-md hover:scale-105 transition px-12 py-3 md:p-3">
                       <FaEdit />{" "}
                       <span className="text-lg lg:hidden ">Edit Book</span>
-                    </button>
+                    </Link>
                   </div>
 
                   <div className="flex flex-col items-center justify-center">
-                    <button className="flex items-center gap-2 bg-white text-red-700 rounded-full text-3xl shadow-md hover:scale-105 transition px-10 py-3 md:p-3">
+                    <button className="flex items-center gap-2 bg-white text-red-700 rounded-full text-3xl shadow-md hover:scale-105 transition px-10 py-3 md:p-3" onClick={deleteBook}>
                       <MdOutlineDelete />{" "}
                       <span className="text-lg lg:hidden">Delete Book</span>
                     </button>
