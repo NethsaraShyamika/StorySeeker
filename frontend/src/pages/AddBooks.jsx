@@ -77,7 +77,6 @@ const AddBooks = () => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
     
-    // Clear error for this field when user starts typing
     if (errors[name]) {
       setErrors({ ...errors, [name]: "" });
     }
@@ -127,7 +126,6 @@ const AddBooks = () => {
   return (
     <div className="min-h-screen p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-5xl font-bold text-zinc-100 mb-2 flex items-center gap-3">
             <FaBook className="text-blue-500" />
@@ -136,7 +134,6 @@ const AddBooks = () => {
           <p className="text-zinc-400 text-lg">Fill in the details to add a new book to the collection</p>
         </div>
 
-        {/* Success Message */}
         {successMessage && (
           <div className="mb-6 bg-green-500/20 border border-green-500 text-green-400 px-6 py-4 rounded-lg flex items-center gap-3 animate-fade-in">
             <FaCheckCircle className="text-2xl" />
@@ -144,7 +141,6 @@ const AddBooks = () => {
           </div>
         )}
 
-        {/* Error Message */}
         {errors.submit && (
           <div className="mb-6 bg-red-500/20 border border-red-500 text-red-400 px-6 py-4 rounded-lg flex items-center gap-3 animate-fade-in">
             <FaExclamationCircle className="text-2xl" />
@@ -152,10 +148,8 @@ const AddBooks = () => {
           </div>
         )}
 
-        {/* Form */}
         <form onSubmit={submit} className="bg-zinc-800 rounded-xl shadow-2xl overflow-hidden">
           <div className="p-6 md:p-8 space-y-6">
-            {/* Image URL */}
             <div>
               <label className="flex items-center gap-2 text-zinc-300 font-medium mb-2">
                 <FaImage className="text-blue-400" />
@@ -174,7 +168,6 @@ const AddBooks = () => {
               {errors.url && <p className="text-red-400 text-sm mt-1">{errors.url}</p>}
             </div>
 
-            {/* Title */}
             <div>
               <label className="flex items-center gap-2 text-zinc-300 font-medium mb-2">
                 <FaBook className="text-blue-400" />
@@ -193,7 +186,6 @@ const AddBooks = () => {
               {errors.title && <p className="text-red-400 text-sm mt-1">{errors.title}</p>}
             </div>
 
-            {/* Author */}
             <div>
               <label className="flex items-center gap-2 text-zinc-300 font-medium mb-2">
                 <FaUser className="text-blue-400" />
@@ -212,9 +204,7 @@ const AddBooks = () => {
               {errors.author && <p className="text-red-400 text-sm mt-1">{errors.author}</p>}
             </div>
 
-            {/* Language and Price Row */}
             <div className="grid md:grid-cols-2 gap-6">
-              {/* Language */}
               <div>
                 <label className="flex items-center gap-2 text-zinc-300 font-medium mb-2">
                   <FaLanguage className="text-blue-400" />
@@ -238,7 +228,6 @@ const AddBooks = () => {
                 {errors.language && <p className="text-red-400 text-sm mt-1">{errors.language}</p>}
               </div>
 
-              {/* Price */}
               <div>
                 <label className="flex items-center gap-2 text-zinc-300 font-medium mb-2">
                   <FaDollarSign className="text-blue-400" />
@@ -259,7 +248,6 @@ const AddBooks = () => {
               </div>
             </div>
 
-            {/* Category */}
             <div>
               <label className="flex items-center gap-2 text-zinc-300 font-medium mb-2">
                 <FaTags className="text-blue-400" />
@@ -283,7 +271,6 @@ const AddBooks = () => {
               {errors.category && <p className="text-red-400 text-sm mt-1">{errors.category}</p>}
             </div>
 
-            {/* Description */}
             <div>
               <label className="flex items-center gap-2 text-zinc-300 font-medium mb-2">
                 <FaFileAlt className="text-blue-400" />
@@ -311,7 +298,6 @@ const AddBooks = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="bg-zinc-900 px-6 md:px-8 py-6 flex justify-end gap-4">
             <button
               type="button"

@@ -77,15 +77,12 @@ const AllBooks = () => {
 
   return (
     <div className="bg-zinc-900 min-h-screen px-4 sm:px-8 md:px-12 py-8">
-      {/* Header Section */}
       <div className="mb-8">
         <h4 className="text-3xl md:text-4xl text-yellow-100 font-semibold mb-6">
           All Books
         </h4>
 
-        {/* Search and Filter Controls */}
         <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-          {/* Search Input */}
           <div className="relative w-full md:max-w-md">
             <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
             <input
@@ -105,7 +102,6 @@ const AllBooks = () => {
             )}
           </div>
 
-          {/* Sort Dropdown */}
           <div className="flex items-center gap-3 w-full md:w-auto">
             <label className="text-zinc-400 text-sm whitespace-nowrap">
               Sort by:
@@ -124,7 +120,6 @@ const AllBooks = () => {
           </div>
         </div>
 
-        {/* Results Info */}
         <div className="mt-4 text-zinc-400 text-sm">
           {filtering ? (
             <p>
@@ -140,7 +135,6 @@ const AllBooks = () => {
         </div>
       </div>
 
-      {/* Books Grid */}
       {filteredAndSortedBooks.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-zinc-400">
           <FaSearch className="text-6xl mb-4 opacity-50" />

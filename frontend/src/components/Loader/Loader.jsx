@@ -9,7 +9,6 @@ const Loader = () => {
         viewBox="0 0 50 50"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Background transparent/white circle */}
         <circle
           cx="25"
           cy="25"
@@ -20,11 +19,10 @@ const Loader = () => {
           fill="none"
         />
 
-        {/* Blue spinning arc */}
         <path
           d="M25 5
              a 20 20 0 0 1 20 20"
-          stroke="#3b82f6"   /* Tailwind blue-500 */
+          stroke="#3b82f6" 
           strokeWidth="5"
           strokeLinecap="round"
           fill="none"

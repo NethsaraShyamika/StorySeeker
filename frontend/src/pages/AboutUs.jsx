@@ -48,8 +48,7 @@ const stats = [
 
 const AboutUs = () => {
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
+    <div className="bg-linear-to-b from-gray-50 to-white">
       <div
         className="relative h-[700px] bg-cover bg-center flex flex-col items-center justify-center text-white px-4 text-center overflow-hidden"
         style={{ backgroundImage: `url(${HeroImage})` }}
@@ -84,7 +83,6 @@ const AboutUs = () => {
         </div>
       </div>
 
-      {/* Stats Section */}
       <div className="bg-zinc-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -100,7 +98,6 @@ const AboutUs = () => {
         </div>
       </div>
 
-      {/* Features Section */}
       <div className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-900">
@@ -114,7 +111,7 @@ const AboutUs = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-50 to-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-center"
+                className="bg-linear-to-br from-gray-50 to-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-center"
               >
                 <div className="text-blue-600 mb-4 flex justify-center">
                   {feature.icon}
@@ -129,8 +126,7 @@ const AboutUs = () => {
         </div>
       </div>
 
-      {/* Team Section */}
-      <div className="bg-gradient-to-b from-gray-50 to-white py-20 px-4">
+      <div className="bg-linear-to-b from-gray-50 to-white py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-900">
             Meet Our Team
@@ -153,7 +149,7 @@ const AboutUs = () => {
                       className="h-40 w-40 rounded-full mx-auto object-cover border-4 border-blue-500 shadow-lg"
                     />
                   ) : (
-                    <div className="h-40 w-40 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mx-auto border-4 border-blue-500 shadow-lg"></div>
+                    <div className="h-40 w-40 bg-linear-to-br from-blue-400 to-purple-500 rounded-full mx-auto border-4 border-blue-500 shadow-lg"></div>
                   )}
                 </div>
 
@@ -167,7 +163,6 @@ const AboutUs = () => {
                   {member.bio}
                 </p>
 
-                {/* Social Links */}
                 <div className="flex justify-center gap-4">
                   <a
                     href={member.social.linkedin}
@@ -197,8 +192,7 @@ const AboutUs = () => {
         </div>
       </div>
 
-      {/* CTA Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20 px-4">
+      <div className="bg-linear-to-r from-blue-600 to-purple-600 text-white py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Join Our StorySeeker Community!
@@ -225,7 +219,6 @@ const AboutUs = () => {
         </div>
       </div>
 
-      {/* Newsletter Section */}
       <div className="bg-gray-900 text-white py-16 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <h3 className="text-3xl font-bold mb-4">Stay Updated</h3>
