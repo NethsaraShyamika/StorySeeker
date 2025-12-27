@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   Image,
   BookOpen,
@@ -8,6 +7,7 @@ import {
   DollarSign,
   Globe,
   Tag,
+import api from "../api/axios";
   FileText,
   AlertCircle,
   CheckCircle,
@@ -111,8 +111,8 @@ const UpdateBook = () => {
         authorization: `Bearer ${localStorage.getItem("token")}`,
         bookid: id,
       };
-      const response = await axios.put(
-        "http://localhost:1000/api/v1/update-book",
+      const response = await api.put(
+        "/update-book",
         data,
         { headers }
       );
@@ -145,8 +145,8 @@ const UpdateBook = () => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
           bookid: id,
         };
-        const response = await axios.get(
-          `http://localhost:1000/api/v1/get-book-by-id/${id}`,
+        const response = await api.get(
+          `/get-book-by-id/${id}`,
           { headers }
         );
         setData(response.data.data);

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { 
@@ -7,7 +6,8 @@ import {
   ShoppingCart, 
   Edit3, 
   Trash2, 
-  User, 
+  User,
+import api from "../../api/axios"; 
   Tag, 
   Globe, 
   DollarSign,
@@ -43,7 +43,7 @@ const ViewBookDetails = () => {
       try {
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        const response = await axios.get(`http://localhost:1000/api/v1/get-book-by-id/${id}`);
+        const response = await api.get(`/get-book-by-id/${id}`);
         setData(response.data.data);
         
       } catch (error) {
@@ -66,7 +66,7 @@ const ViewBookDetails = () => {
         authorization: `Bearer ${localStorage.getItem("token")}`,
         bookid: id,
       };
-      const response = await axios.put("http://localhost:1000/api/v1/add-favourite", {}, { headers });
+      const response = await api.put("/add-favourite", {}, { headers });
       
       showNotification("success", "Added to favourites successfully!");
     } catch (error) {
@@ -86,7 +86,7 @@ const ViewBookDetails = () => {
         authorization: `Bearer ${localStorage.getItem("token")}`,
         bookid: id,
       };
-      const response = await axios.put("http://localhost:1000/api/v1/add-cart", {}, { headers });
+      const response = await api.put("/add-cart", {}, { headers });
       
       showNotification("success", "Added to cart successfully!");
     } catch (error) {
@@ -110,7 +110,7 @@ const ViewBookDetails = () => {
         authorization: `Bearer ${localStorage.getItem("token")}`,
         bookid: id,
       };
-      const response = await axios.delete("http://localhost:1000/api/v1/delete-book", { headers });
+      const response = await api.delete("/delete-book", { headers });
       
       showNotification("success", "Book deleted successfully!");
       setTimeout(() => {

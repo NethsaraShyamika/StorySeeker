@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Mail, Lock, User, MapPin, AlertCircle, CheckCircle, Eye, EyeOff, Loader } from "lucide-react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -72,7 +72,7 @@ const SignUp = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      const response = await axios.post("http://localhost:1000/api/v1/signup", formData);
+      const response = await api.post("/signup", formData);
       
       showNotification("success", "Account created successfully! Redirecting to login...");
       

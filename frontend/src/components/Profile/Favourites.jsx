@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
 import BookCard from "../BookCard/BookCard";
 import { FaHeart, FaHeartCirclePlus, FaSpinner } from "react-icons/fa6";
+import api from "../../api/axios";
 
 const Favourites = () => {
   const [FavouriteBooks, setFavouriteBooks] = useState([]);
@@ -18,8 +18,8 @@ const Favourites = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:1000/api/v1/get-favourites",
+        const response = await api.get(
+          "/get-favourites",
           { headers }
         );
         setFavouriteBooks(response.data.data);

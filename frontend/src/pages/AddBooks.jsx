@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { FaBook, FaUser, FaDollarSign, FaLanguage, FaImage, FaTags, FaFileAlt, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import api from "../api/axios";
 
 const AddBooks = () => {
   const [data, setData] = useState({
@@ -93,8 +93,8 @@ const AddBooks = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:1000/api/v1/add-book",
+      const response = await api.post(
+        "/add-book",
         data,
         { headers }
       );

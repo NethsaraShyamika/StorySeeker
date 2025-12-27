@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { ShoppingCart, Trash2, Package, Plus, Minus, AlertCircle, CheckCircle, ArrowRight } from "lucide-react";
-import axios from "axios";
 import Loader from "../components/Loader/Loader";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Cart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const response = await axios.get("http://localhost:1000/api/v1/get-user-cart", { headers });
+        const response = await api.get("/get-user-cart", { headers });
         setCart(response.data.data);
         
         const initialQuantities = {};
@@ -58,7 +58,7 @@ const Cart = () => {
   const deleteItem = async (bookId) => {
     setRemoving(bookId);
     try {
-      await axios.put(`http://localhost:1000/api/v1/remove-cart/${bookId}`, {}, { headers });
+      await api.put(`/remove-cart/${bookId}`, {}, { headers });
       const updatedCart = cart.filter(item => item._id !== bookId);
       const updatedQuantities = { ...quantities };
       delete updatedQuantities[bookId];
@@ -81,8 +81,8 @@ const Cart = () => {
         quantity: quantities[item._id] || 1
       }));
 
-      const response = await axios.post(
-        "http://localhost:1000/api/v1/place-order",
+      const response = await api.post(
+        "/place-order",
         { order: orderPayload },
         { headers }
       );
@@ -107,7 +107,7 @@ const Cart = () => {
     
     try {
       await Promise.all(cart.map(item => 
-        axios.put(`http://localhost:1000/api/v1/remove-cart/${item._id}`, {}, { headers })
+        api.put(`/remove-cart/${item._id}`, {}, { headers })
       ));
       setCart([]);
       setQuantities({});

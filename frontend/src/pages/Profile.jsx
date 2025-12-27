@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useMemo, createContext } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Profile/Sidebar";
-import axios from "axios";
 import Loader from "../components/Loader/Loader";
 import MobileNav from "../components/Profile/MobileNav";
 import { AlertCircle, RefreshCw } from "lucide-react";
+import api from "../api/axios";
 
 export const UserProfileContext = createContext();
 
@@ -23,8 +23,8 @@ const Profile = () => {
     setError(null);
     
     try {
-      const response = await axios.get(
-        "http://localhost:1000/api/v1/user-information",
+      const response = await api.get(
+        "/user-information",
         { headers }
       );
       

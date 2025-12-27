@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
-import axios from "axios";
 import Loader from "../Loader/Loader";
 import img from "../../assets/shopping.png";
 import { Link } from "react-router-dom";
+import api from "../../api/axios";
 
 const UserOrderHistory = () => {
   const [OrderHistory, setOrderHistory] = useState([]);
@@ -18,8 +18,8 @@ const UserOrderHistory = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:1000/api/v1/get-order-history",
+        const response = await api.get(
+          "/get-order-history",
           { headers }
         );
 

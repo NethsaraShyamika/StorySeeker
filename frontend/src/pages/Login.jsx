@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { authActions } from "../store/auth";
 import { useDispatch } from "react-redux";
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaBook, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import api from "../api/axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -48,8 +48,8 @@ const Login = () => {
     
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:1000/api/v1/login",
+      const response = await api.post(
+        "/login",
         formData
       );
       

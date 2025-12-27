@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import axios from "axios";
 import {
   useReactTable,
   getCoreRowModel,
@@ -8,6 +7,7 @@ import {
   getSortedRowModel,
   flexRender,
 } from "@tanstack/react-table";
+import api from "../api/axios";
 import Loader from "../components/Loader/Loader";
 import { Link } from "react-router-dom";
 import {
@@ -58,8 +58,8 @@ const AllOrders = () => {
 
   const fetchOrders = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:1000/api/v1/get-all-orders",
+      const response = await api.get(
+        "/get-all-orders",
         { headers }
       );
       setAllOrders(response.data.orders || []);
@@ -96,8 +96,8 @@ const AllOrders = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      const response = await axios.put(
-        `http://localhost:1000/api/v1/update-order-status/${orderId}`,
+      const response = await api.put(
+        `/update-order-status/${orderId}`,
         { status: newStatus },
         { headers }
       );
@@ -119,8 +119,8 @@ const AllOrders = () => {
     try {
       await Promise.all(
         selectedOrders.map((orderId) =>
-          axios.put(
-            `http://localhost:1000/api/v1/update-order-status/${orderId}`,
+          api.put(
+            `/update-order-status/${orderId}`,
             { status: newStatus },
             { headers }
           )

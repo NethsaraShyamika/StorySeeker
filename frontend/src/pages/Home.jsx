@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Hero from "../components/Home/Hero";
 import RecentlyAdded from "../components/Home/RecentlyAdded";
+import api from "../api/axios";
 import {
   FaBook,
   FaUsers,
@@ -26,9 +27,8 @@ const Home = () => {
   useEffect(() => {
     const fetchBookCount = async () => {
       try {
-        const res = await fetch("http://localhost:1000/api/v1/get-all-books");
-        const json = await res.json();
-        setBookCount(json.data.length);
+        const res = await api.get("/get-all-books");
+        setBookCount(res.data.data.length);
       } catch (error) {
         console.error("Failed to fetch book count", error);
       }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo, useContext } from "react";
-import axios from "axios";
 import Loader from "../Loader/Loader";
 import {
   FaUser,
@@ -8,6 +7,7 @@ import {
   FaSave,
   FaCheckCircle,
 } from "react-icons/fa";
+import api from "../../api/axios";
 import { UserProfileContext } from "../../pages/Profile";
 
 const Settings = () => {
@@ -34,8 +34,8 @@ const Settings = () => {
     setIsUpdating(true);
     try {
       const payload = { address: Value.address };
-      const resp = await axios.put(
-        "http://localhost:1000/api/v1/update-user",
+      const resp = await api.put(
+        "/update-user",
         payload,
         { headers }
       );
