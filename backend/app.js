@@ -15,7 +15,6 @@ const Order = require('./routes/order');
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
       "https://storyseeker.vercel.app"
     ],
     credentials: true,
