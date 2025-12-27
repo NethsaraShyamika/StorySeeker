@@ -127,7 +127,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-zinc-800">
           <div className="max-w-2xl">
             <h3 className="text-xl font-semibold mb-3 text-white">
-              📧 Stay in the Loop
+              📧 Stay Connected
             </h3>
             <p className="text-zinc-400 text-sm mb-4">
               Get the latest book recommendations and exclusive deals delivered to your inbox.

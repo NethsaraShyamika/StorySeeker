@@ -113,7 +113,7 @@ const AboutUs = () => {
                 key={index}
                 className="bg-linear-to-br from-gray-50 to-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-center"
               >
-                <div className="text-blue-600 mb-4 flex justify-center">
+                <div className="text-yellow-400 mb-4 flex justify-center">
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-gray-900">
@@ -146,21 +146,21 @@ const AboutUs = () => {
                     <img
                       src={member.image}
                       alt={member.name}
-                      className="h-40 w-40 rounded-full mx-auto object-cover border-4 border-blue-500 shadow-lg"
+                      className="h-40 w-40 rounded-full mx-auto object-cover border-4 border-yellow-400 shadow-lg"
                     />
                   ) : (
-                    <div className="h-40 w-40 bg-linear-to-br from-blue-400 to-purple-500 rounded-full mx-auto border-4 border-blue-500 shadow-lg"></div>
+                    <div className="h-40 w-40 bg-linear-to-r from-slate-800 via-yellow-600 to-orange-600 rounded-full mx-auto border-4 border-yellow-400 shadow-lg"></div>
                   )}
                 </div>
 
                 <h3 className="text-2xl font-bold text-center mb-2 text-gray-900">
                   {member.name}
                 </h3>
-                <p className="text-blue-600 text-center font-medium mb-3">
+                <p className="text-yellow-400 text-center font-medium mb-3">
                   {member.role}
                 </p>
                 <p className="text-gray-600 text-center mb-6">
-                  {member.bio}
+                  {member.bio} 
                 </p>
 
                 <div className="flex justify-center gap-4">
@@ -192,7 +192,7 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <div className="bg-linear-to-r from-blue-600 to-purple-600 text-white py-20 px-4">
+      <div className="bg-linear-to-r from-slate-800 via-yellow-600 to-orange-600 text-white py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Join Our StorySeeker Community!
@@ -215,25 +215,6 @@ const AboutUs = () => {
             >
               Browse Books
             </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-gray-900 text-white py-16 px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <h3 className="text-3xl font-bold mb-4">Stay Updated</h3>
-          <p className="text-gray-300 mb-8">
-            Subscribe to our newsletter for the latest book recommendations and community updates
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-6 py-3 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button className="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-full font-semibold transition-colors">
-              Subscribe
-            </button>
           </div>
         </div>
       </div>

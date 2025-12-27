@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import BookCard from "../components/BookCard/BookCard";
 import Loader from "../components/Loader/Loader";
-import { FaSearch, FaTimes } from "react-icons/fa";
+import { FaSearch, FaTimes, FaTh, FaList, FaEye, FaStar } from "react-icons/fa";
 
 const AllBooks = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtering, setFiltering] = useState("");
   const [sortBy, setSortBy] = useState("default");
+  const [viewMode, setViewMode] = useState("grid");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,11 +29,9 @@ const AllBooks = () => {
     fetchData();
   }, []);
 
-  // Filter and sort books
   const filteredAndSortedBooks = useMemo(() => {
     let filtered = data;
 
-    // Apply search filter
     if (filtering) {
       filtered = data.filter(
         (book) =>
@@ -41,7 +41,6 @@ const AllBooks = () => {
       );
     }
 
-    // Apply sorting
     let sorted = [...filtered];
     switch (sortBy) {
       case "title-asc":
@@ -63,6 +62,14 @@ const AllBooks = () => {
     return sorted;
   }, [data, filtering, sortBy]);
 
+  const booksByCategory = useMemo(() => {
+    return filteredAndSortedBooks.reduce((acc, book) => {
+      if (!acc[book.category]) acc[book.category] = [];
+      acc[book.category].push(book);
+      return acc;
+    }, {});
+  }, [filteredAndSortedBooks]);
+
   const clearFilter = () => {
     setFiltering("");
   };
@@ -76,7 +83,7 @@ const AllBooks = () => {
   }
 
   return (
-    <div className="bg-zinc-900 min-h-screen px-4 sm:px-8 md:px-12 py-8">
+    <div className="bg-zinc-900 min-h-screen px-4 sm:px-8 md:px-12 py-8 space-y-12">
       <div className="mb-8">
         <h4 className="text-3xl md:text-4xl text-yellow-100 font-semibold mb-6">
           All Books
@@ -117,6 +124,36 @@ const AllBooks = () => {
               <option value="price-asc">Price (Low to High)</option>
               <option value="price-desc">Price (High to Low)</option>
             </select>
+
+            <div className="flex items-center gap-4 ml-4">
+              <label className="text-zinc-400 text-sm whitespace-nowrap">
+                View:
+              </label>
+              <div className="flex bg-zinc-800 border border-zinc-700 rounded-lg p-1">
+                <button
+                  onClick={() => setViewMode("grid")}
+                  className={`p-2 rounded-md transition-colors ${
+                    viewMode === "grid"
+                      ? "bg-blue-600 text-white"
+                      : "text-zinc-400 hover:text-zinc-200"
+                  }`}
+                  title="Grid View"
+                >
+                  <FaTh className="text-sm" />
+                </button>
+                <button
+                  onClick={() => setViewMode("list")}
+                  className={`p-2 rounded-md transition-colors ${
+                    viewMode === "list"
+                      ? "bg-blue-600 text-white"
+                      : "text-zinc-400 hover:text-zinc-200"
+                  }`}
+                  title="List View"
+                >
+                  <FaList className="text-sm" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -150,16 +187,93 @@ const AllBooks = () => {
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-          {filteredAndSortedBooks.map((book, i) => (
-            <div
-              key={book._id || i}
-              className="transform transition-transform duration-300 hover:scale-105"
-            >
-              <BookCard data={book} />
+        <>
+          {Object.keys(booksByCategory).map((category) => (
+            <div key={category} className="space-y-4">
+              <div className="flex items-center gap-4 p-2">
+                <div className="flex-1 h-px bg-linear-to-r from-yellow-400 to-orange-500" />
+                <h2 className="text-3xl font-bold bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent whitespace-nowrap px-1">
+                  {category}
+                </h2>
+                <div className="flex-1 h-px bg-linear-to-r from-yellow-400 to-orange-500" />
+              </div>
+              {viewMode === "grid" ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                  {booksByCategory[category].map((book) => (
+                    <div
+                      key={book._id}
+                      className="transform transition-transform duration-300 hover:scale-105"
+                    >
+                      <BookCard data={book} />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                  {booksByCategory[category].map((book) => (
+                    <div
+                      key={book._id}
+                      className="bg-zinc-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-zinc-700 hover:border-yellow-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10"
+                    >
+                      <div className="flex flex-col sm:flex-row">
+                        <div className="relative w-full sm:w-32 h-48 sm:h-32 shrink-0 bg-zinc-900 flex items-center justify-center p-2">
+                          <img
+                            src={book.url}
+                            alt={book.title}
+                            className="h-full w-auto object-contain"
+                          />
+                        </div>
+
+                        <div className="flex-1 p-4 space-y-2">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                            <div className="flex-1">
+                              <h3 className="text-lg font-bold text-white line-clamp-1 hover:text-yellow-400 transition-colors">
+                                {book.title}
+                              </h3>
+                              <p className="text-sm text-zinc-400 flex items-center gap-1">
+                                <span className="text-yellow-500">by</span>{" "}
+                                {book.author}
+                              </p>
+                              <p className="text-sm text-zinc-500 line-clamp-2 mt-1">
+                                {book.description}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-2xl font-bold bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                                Rs.{book.price}
+                              </p>
+                              <p className="text-xs text-zinc-500 mt-1">
+                                {book.category} • {book.language}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between pt-2 border-t border-zinc-700">
+                            <div className="flex items-center gap-4 text-xs text-zinc-400">
+                              {book.rating && (
+                                <div className="flex items-center gap-1">
+                                  <FaStar className="text-yellow-500 text-xs" />
+                                  <span>{book.rating}</span>
+                                </div>
+                              )}
+                            </div>
+                            <Link
+                              to={`/view-book-details/${book._id}`}
+                              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+                            >
+                              <FaEye className="text-xs" />
+                              View Details
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
-        </div>
+        </>
       )}
     </div>
   );

@@ -36,7 +36,6 @@ router.post("/add-book", authenticateToken, async (req, res) => {
       message: "Book added successfully",
       data: newBook,
     });
-
   } catch (error) {
     console.error(error);
     return res.status(500).json({
@@ -59,7 +58,15 @@ router.put("/update-book", authenticateToken, async (req, res) => {
       });
     }
 
-    const allowedFields = ["url", "title", "author", "price", "description", "language", "category"];
+    const allowedFields = [
+      "url",
+      "title",
+      "author",
+      "price",
+      "description",
+      "language",
+      "category",
+    ];
     const updateFields = Object.keys(req.body);
     const isValid = updateFields.some((field) => allowedFields.includes(field));
 
@@ -88,7 +95,6 @@ router.put("/update-book", authenticateToken, async (req, res) => {
       message: "Book updated successfully",
       data: updatedBook,
     });
-
   } catch (error) {
     console.error(error);
     return res.status(500).json({
@@ -125,7 +131,6 @@ router.delete("/delete-book", authenticateToken, async (req, res) => {
       message: "Book deleted successfully",
       data: deletedBook,
     });
-
   } catch (error) {
     console.error(error);
     return res.status(500).json({
@@ -157,7 +162,9 @@ router.get("/get-all-books", async (req, res) => {
 // Get recent books
 router.get("/get-recent-books", async (req, res) => {
   try {
-    const books = await Book.find().sort({ createdAt: -1 }).limit(4);
+    const books = await Book.find()
+      .sort({ _id: -1 })
+      .limit(4);
     return res.status(200).json({
       success: true,
       data: books,

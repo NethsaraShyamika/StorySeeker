@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import BookCard from "../BookCard/BookCard";
 import Loader from "../Loader/Loader";
 
 const RecentlyAdded = () => {
+  const navigate = useNavigate();
   const [Data, setData] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -79,7 +81,8 @@ const RecentlyAdded = () => {
 
       {!loading && Data && Data.length > 0 && (
         <div className="flex justify-center mt-8 mb-12">
-          <button className="px-8 py-3 bg-linear-to-r from-yellow-500 to-orange-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+          <button className="px-8 py-3 bg-linear-to-r from-yellow-500 to-orange-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+          onClick={() => navigate("/all-books")}>
             View All Books
           </button>
         </div>
