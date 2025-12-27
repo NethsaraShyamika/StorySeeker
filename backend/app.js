@@ -12,7 +12,15 @@ const Favourite = require('./routes/favourite')
 const Cart = require('./routes/cart');
 const Order = require('./routes/order');
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://storyseeker.vercel.app"
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 //routes

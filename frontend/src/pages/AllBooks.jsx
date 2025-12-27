@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import BookCard from "../components/BookCard/BookCard";
 import Loader from "../components/Loader/Loader";
 import { FaSearch, FaTimes, FaTh, FaList, FaEye, FaStar } from "react-icons/fa";
+import api from "../api/axios";
 
 const AllBooks = () => {
   const [data, setData] = useState([]);
@@ -15,9 +15,7 @@ const AllBooks = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:1000/api/v1/get-all-books"
-        );
+        const response = await api.get("/api/v1/get-all-books");
         setData(response.data.data || []);
       } catch (error) {
         console.error("Error fetching books:", error);
