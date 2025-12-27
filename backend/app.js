@@ -23,6 +23,12 @@ app.use('/api/v1', Cart);
 app.use('/api/v1', Order);
 
 //creating port
-app.listen(process.env.PORT, () => {
-    console.log(`Server Started on port ${process.env.PORT}`);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server Started on port ${PORT}`);
+});
+
+app.get("/", (req, res) => {
+  res.send("StorySeeker API is running 🚀");
 });
